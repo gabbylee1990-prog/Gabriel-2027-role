@@ -168,12 +168,12 @@ td.r,th.r{text-align:right}
   </div>
 
   <nav class="tabs" role="tablist" aria-label="Plan sections">
-    <button class="tab" role="tab" id="tab-scope" aria-controls="scope" aria-selected="true">Scope of work</button>
-    <button class="tab" role="tab" id="tab-comp" aria-controls="comp" aria-selected="false">Compensation &amp; targets</button>
+    <button class="tab" role="tab" id="tab-scope" aria-controls="panel-scope" aria-selected="true">Scope of work</button>
+    <button class="tab" role="tab" id="tab-comp" aria-controls="panel-comp" aria-selected="false">Compensation &amp; targets</button>
   </nav>
 
   <!-- SCOPE -->
-  <div class="panel" id="scope" role="tabpanel" aria-labelledby="tab-scope">
+  <div class="panel" id="panel-scope" role="tabpanel" aria-labelledby="tab-scope">
     <section>
       <h2>Role at a glance</h2>
       <div class="facts">
@@ -264,7 +264,7 @@ td.r,th.r{text-align:right}
   </div>
 
   <!-- COMP -->
-  <div class="panel" id="comp" role="tabpanel" aria-labelledby="tab-comp" hidden>
+  <div class="panel" id="panel-comp" role="tabpanel" aria-labelledby="tab-comp" hidden>
     <section>
       <h2>Proposed base</h2>
       <div class="facts">
@@ -365,12 +365,16 @@ td.r,th.r{text-align:right}
 <script>
 (function(){
   const tabs=[...document.querySelectorAll('.tab')];
-  function show(id){
+  const nav=document.querySelector('.tabs');
+  function show(id,top){
     tabs.forEach(t=>{const on=t.getAttribute('aria-controls')===id;t.setAttribute('aria-selected',on);document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});
-    try{history.replaceState(null,'','#'+id)}catch(e){}
+    try{history.replaceState(null,'','#'+id.replace('panel-',''))}catch(e){}
+    if(top){const pn=document.getElementById(id);const y=pn.getBoundingClientRect().top+window.scrollY-nav.offsetHeight-8;if(window.scrollY>y)window.scrollTo(0,Math.max(0,y));}
   }
-  tabs.forEach(t=>t.addEventListener('click',()=>show(t.getAttribute('aria-controls'))));
-  if(location.hash==='#comp')show('comp');
+  tabs.forEach(t=>t.addEventListener('click',()=>show(t.getAttribute('aria-controls'),true)));
+  window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(h==='comp'||h==='scope'){show('panel-'+h);window.scrollTo(0,0);}});
+  if(location.hash==='#comp'){show('panel-comp');window.scrollTo(0,0);setTimeout(()=>window.scrollTo(0,0),0);}
+  if('scrollRestoration' in history)history.scrollRestoration='manual';
 
   const $=id=>document.getElementById(id);
   const v=id=>Math.max(0,parseFloat($(id).value)||0);
