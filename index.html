@@ -1,0 +1,395 @@
+<title>GFTN Return Role Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --ground:#F3F5F1; --surface:#FFFFFF; --ink:#16211C; --muted:#5B6A62; --rule:#DCE2DB;
+  --accent:#0F7A5A; --accent-soft:#E2F1EA; --flag:#9A6414; --flag-soft:#F7ECD8; --bar2:#9CC9B6;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#101614; --surface:#17201C; --ink:#E4EBE7; --muted:#9AAAA2; --rule:#2A3631;
+    --accent:#45C394; --accent-soft:#193A2E; --flag:#E0A94C; --flag-soft:#3A2C15; --bar2:#2F6B55;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#101614; --surface:#17201C; --ink:#E4EBE7; --muted:#9AAAA2; --rule:#2A3631;
+  --accent:#45C394; --accent-soft:#193A2E; --flag:#E0A94C; --flag-soft:#3A2C15; --bar2:#2F6B55;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.55 var(--body);padding-inline:20px;padding-block:28px 64px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(28px,4.4vw,40px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:22px;font-weight:700}
+h3{font-size:17px;font-weight:500}
+p{margin:0}
+.eyebrow{font:600 12px/1 var(--body);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+header{display:flex;flex-direction:column;gap:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:600 12px/1 var(--body);padding:6px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.chip.flag{background:var(--flag-soft);color:var(--flag)}
+.tbc{font:600 11px/1 var(--body);letter-spacing:.04em;text-transform:uppercase;padding:3px 7px;border-radius:4px;background:var(--flag-soft);color:var(--flag);white-space:nowrap}
+
+/* goals */
+.goals{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule)}
+.goals > div{padding:16px 0;display:flex;flex-direction:column;gap:6px}
+.goals > div + div{border-left:1px solid var(--rule);padding-left:20px}
+.goals > div:first-child{padding-right:20px}
+.goal-big{font-family:var(--display);font-size:20px;font-weight:500}
+
+/* tabs */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--rule);position:sticky;top:env(safe-area-inset-top,0px);background:var(--ground);z-index:2}
+.tab{appearance:none;border:0;background:none;color:var(--muted);font:600 15px var(--body);padding:12px 16px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tab:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.panel{display:flex;flex-direction:column;gap:36px;padding-top:8px}
+section{display:flex;flex-direction:column;gap:14px}
+
+/* facts */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.fact{background:var(--surface);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.fact b{font-weight:600}
+.facts.three{grid-template-columns:repeat(3,1fr)}
+
+/* split bar */
+.split{display:flex;height:34px;border-radius:6px;overflow:hidden;font:600 13px var(--body)}
+.split span{display:flex;align-items:center;padding:0 12px;white-space:nowrap}
+.split .a{background:var(--accent);color:var(--surface);flex:72}
+.split .b{background:var(--bar2);color:var(--ink);flex:28}
+
+/* pillars */
+.pillars{display:grid;grid-template-columns:1.6fr 1fr;gap:20px}
+.pillar{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.pillar .head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.stream{display:flex;flex-direction:column;gap:6px;padding-top:14px;border-top:1px solid var(--rule)}
+.stream .tag{font:600 12px var(--mono);color:var(--accent)}
+ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+li::marker{color:var(--muted)}
+
+
+/* timeline */
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--accent)}
+.phase{padding:14px 14px 0 0;display:flex;flex-direction:column;gap:6px;position:relative}
+.phase::before{content:"";position:absolute;top:-7px;left:0;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--ground)}
+.phase .when{font:600 12px var(--mono);color:var(--muted)}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font:600 12px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.box{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.qlist{list-style:none;padding:0;gap:10px}
+.qlist li{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+
+/* calculator */
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font:600 13px var(--body);color:var(--muted)}
+.field input,.field select{font:15px var(--mono);padding:8px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--ground);color:var(--ink);width:100%}
+.field.full{grid-column:1/-1}
+.result{display:flex;flex-direction:column;gap:14px}
+.total{font:600 clamp(30px,5vw,40px)/1 var(--mono);letter-spacing:-.02em}
+.stack{display:flex;height:14px;border-radius:4px;overflow:hidden;background:var(--rule)}
+.stack i{display:block}
+.stack .base{background:var(--accent)}
+.stack .var{background:var(--flag)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+.lines{display:flex;flex-direction:column}
+.lines div{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px dashed var(--rule);font-size:15px}
+.lines div:last-child{border-bottom:0}
+
+.packages{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pkg{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.pkg .base{font:600 24px var(--mono)}
+.pkg ul{font-size:15px}
+.note{font-size:14px;color:var(--muted)}
+.floor{border:1px solid var(--accent);background:var(--accent-soft);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+
+@media (max-width:760px){
+  .facts.three{grid-template-columns:1fr}
+    .facts{grid-template-columns:1fr 1fr}
+  .pillars,.twocol,.calc,.packages,.goals{grid-template-columns:1fr}
+  .goals > div + div{border-left:0;border-top:1px solid var(--rule);padding-left:0}
+  .timeline{grid-template-columns:1fr 1fr;row-gap:20px}
+}
+@media (max-width:440px){
+  .inputs{grid-template-columns:1fr}
+  .tab{padding:12px 10px}
+}
+</style>
+
+<style>
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.why .box{gap:8px}
+.why .k{font:600 12px var(--mono);color:var(--accent)}
+.principle{display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);padding-block:14px}
+.principle .lead{display:flex;flex-direction:column;gap:6px}
+.principle .big{font:600 clamp(26px,4vw,34px)/1 var(--mono)}
+@media (max-width:760px){.why{grid-template-columns:1fr}}
+</style>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Proposal for discussion · Gabriel Lee · return from sabbatical, 1 Dec 2026</span>
+    <h1>Head of Commercial, Private Sector Solutions</h1>
+    <div class="chips">
+      <span class="chip">Private sector: reports to Anthony / Navin</span>
+      <span class="chip">China role: title to be agreed with James</span>
+      <span class="chip">Based in Singapore · about 1 week a month on China</span>
+      <span class="chip flag">Draft for discussion</span>
+    </div>
+  </header>
+
+  <div class="goals">
+    <div>
+      <span class="eyebrow">Now</span>
+      <p class="goal-big">Build and own GFTN's private sector solutions revenue</p>
+      <p class="muted">A commercial role with China responsibilities. We agree the scope first, then pay and targets.</p>
+    </div>
+    <div>
+      <span class="eyebrow">Longer term</span>
+      <p class="goal-big">GM of a region</p>
+      <p class="muted">Review points in June 2027 and December 2027 track progress towards it.</p>
+    </div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Plan sections">
+    <button class="tab" role="tab" id="tab-scope" aria-controls="scope" aria-selected="true">Scope of work</button>
+    <button class="tab" role="tab" id="tab-comp" aria-controls="comp" aria-selected="false">Compensation &amp; targets</button>
+  </nav>
+
+  <!-- SCOPE -->
+  <div class="panel" id="scope" role="tabpanel" aria-labelledby="tab-scope">
+    <section>
+      <h2>Role at a glance</h2>
+      <div class="facts">
+        <div class="fact"><span class="eyebrow">Private sector</span><b>Anthony / Navin</b><span class="muted">Commercial, private sector solutions</span></div>
+        <div class="fact"><span class="eyebrow">China</span><b>James Boey</b><span class="muted">Title and scope with James <span class="tbc">To agree</span></span></div>
+        <div class="fact"><span class="eyebrow">Base</span><b>Singapore</b><span class="muted">About 1 week a month on China</span></div>
+        <div class="fact"><span class="eyebrow">When priorities clash</span><b>Quarterly review</b><span class="muted">One meeting with both leads</span></div>
+      </div>
+      <div class="split" role="img" aria-label="Time split: about 75 percent private sector, 25 percent China">
+        <span class="a" style="flex:75">Private-sector solutions · ~3 weeks a month</span>
+        <span class="b" style="flex:25">China · ~1 week</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>Two pillars</h2>
+      <div class="pillars">
+        <article class="pillar">
+          <div class="head"><h3>Pillar 1 · Private-sector solutions</h3><span class="muted">~3 weeks a month</span></div>
+
+          <div class="stream">
+            <span class="tag">A · Built on public-sector programmes</span>
+            <ul>
+              <li>Sell private-sector participation into GFTN's government policy and capacity-building programmes.</li>
+              <li>Hand-off with the public-sector lead: they own the government client, I own the format for the private companies that join.</li>
+            </ul>
+          </div>
+
+          <div class="stream">
+            <span class="tag">B · Consulting and innovation solutions</span>
+            <ul>
+              <li><b>Private-sector consulting practice.</b> Start small: GFTN consultants and experts deliver, outside firms add capacity where needed.</li>
+              <li><b>Value propositions:</b> market entry, capacity building, thought leadership, and public-sector advocacy <span class="tbc">Not publicised</span></li>
+              <li><b>Put GFTN on the selling side.</b> For the 2025 Digital Assets Report, GFTN supplied the subject expertise and paid ADL US$126k for delivery. The same expertise can be sold to private-sector clients.</li>
+              <li><b>Turn existing products into solutions</b>, each with its own revenue target.</li>
+              <li><b>Centre of Excellence (CoE) or programme office</b> where GFTN consultants and experts are named partners on commissioned projects, across AI, digital assets, quantum and cyber.</li>
+              <li><b>Buyers:</b> Tier 1 companies entering Tier 2 markets, and Tier 2–3 companies entering Tier 1 markets.</li>
+            </ul>
+          </div>
+
+          <div class="stream">
+            <span class="tag">Digital assets</span>
+            <ul><li>I join the panel of experts as the digital assets expert, alongside the commercial role.</li></ul>
+          </div>
+        </article>
+
+        <article class="pillar">
+          <div class="head"><h3>Pillar 2 · China</h3><span class="muted">~1 week a month</span></div>
+          <p class="note">Scope and title to be agreed with James.</p>
+          <ul>
+            <li><b>Strategy:</b> write the China market plan with James within 90 days.</li>
+            <li><b>Relationships:</b> financial institutions, tech firms, associations, and coordination with Hong Kong.</li>
+            <li><b>Deal support</b> on any GFTN deal that needs China access.</li>
+            <li><b>Bring companies out of China:</b> mainland companies with no office outside Hong Kong, onto GFTN platforms.</li>
+            <li><b>Team:</b> hire and manage one sales staff member.</li>
+            <li><b>Represent GFTN</b> at events and on stage in China.</li>
+          </ul>
+          <div class="stream">
+            <span class="tag">Not in this role / to be discussed</span>
+            <ul>
+              <li>Membership sales (I refer only)</li>
+              <li>The content team (advisory role ends 30 Nov)</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+            <section class="twocol">
+      <div class="box">
+        <h3>Resources needed</h3>
+        <ul>
+          <li>A post-sales / project management role to support project follow-ups</li>
+          <li>The China sales staff member</li>
+          <li>A pricing range I can agree to without sign-off</li>
+          <li>Set time from GFTN consultants and experts for private-sector work</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>To agree together</h3>
+        <ul class="qlist">
+          <li><span>FY26/27 private-sector target, by product</span><span class="tbc">Anthony / Navin</span></li>
+          <li><span>China title, scope and revenue number</span><span class="tbc">James</span></li>
+          <li><span>Where the sales hire sits and whose budget pays</span><span class="tbc">All</span></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- COMP -->
+  <div class="panel" id="comp" role="tabpanel" aria-labelledby="tab-comp" hidden>
+    <section>
+      <h2>Proposed base</h2>
+      <div class="facts">
+        <div class="fact"><span class="eyebrow">Current base</span><b class="num">S$16,000 / mo</b><span class="muted num">S$192,000 a year</span></div>
+        <div class="fact"><span class="eyebrow">Proposed increase</span><b class="num">+15%</b><span class="muted num">+S$2,400 a month</span></div>
+        <div class="fact"><span class="eyebrow">Proposed base</span><b class="num">S$18,400 / mo</b><span class="muted num">S$220,800 a year</span></div>
+        <div class="fact"><span class="eyebrow">Includes</span><b>Digital assets expert</b><span class="muted">On the panel of experts</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Why the increase</h2>
+      <div class="why">
+        <div class="box">
+          <span class="k">A wider role</span>
+          <p>The role moves from Head of Customer Success to leading private-sector revenue, with responsibilities in China on top.</p>
+        </div>
+        <div class="box">
+          <span class="k">EMBA completed</span>
+          <p>I have completed my EMBA upskilling with a strong GPA of 3.8/4, including exchanges across Spain (ESADE), Italy (Bocconi), the US (Cornell Tech) and China (Shanghai Jiao Tong). I also successfully executed a consulting project worth SGD1.14m on AI and microdrama with a listed Hong Kong streaming company.</p>
+        </div>
+        <div class="box">
+          <span class="k">Two roles in one</span>
+          <p>I take on the digital assets expert role as well. I was GFTN's lead on the 2025 Global Digital Assets Report and the working group that followed it. GFTN doesn't need to bring in an outside expert.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Commission</h2>
+      <div class="principle">
+        <div class="lead"><span class="eyebrow">Pillar 1</span><span class="big">10%</span></div>
+        <p><b>Pillar 1 only:</b> 10% on revenue <b>above</b> each product target. <b>Below target, no commission or revenue share.</b> GFTN pays only for results beyond plan.</p>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Revenue stream</th><th class="r">Below target</th><th class="r">At or above target</th></tr></thead>
+          <tbody>
+            <tr><td><b>Pillar 1</b> · each private-sector product</td><td class="r num">0%</td><td class="r num">10%</td></tr>
+            <tr><td><b>Pillar 2</b> · China-linked deals (China target S$1M) <span class="tbc">With James</span></td><td class="r num">2%</td><td class="r num">4%</td></tr>
+            <tr><td><b>Pillar 2</b> · New business from China, a subset of China-linked <span class="tbc">Split with CS to agree</span></td><td class="r num">9%</td><td class="r num">9%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">The China target of S$1M is China-linked revenue, which includes new business from China. China-linked revenue earns 2% below the target. Once the target is hit, all China-linked revenue earns 4%. The rate below target is 2% because the China role supports deals other teams close. New business from China is a subset of that revenue and earns 9% instead of the China-linked rate, with the split with CS to agree. Pillar 1 pays 10% on the amount above each product target only. The China terms also include hiring one sales staff member.</p>
+    </section>
+
+    <section>
+      <h2>Year 1 targets</h2>
+      <div class="facts three">
+        <div class="fact"><span class="eyebrow">Pillar 1 target</span><b class="num">S$4.0M</b><span class="muted">Excludes Forums revenue</span></div>
+        <div class="fact"><span class="eyebrow">Pillar 1 goal</span><b class="num">S$4.5M</b><span class="muted">S$0.5M above target</span></div>
+        <div class="fact"><span class="eyebrow">China target</span><b class="num">S$1.0M</b><span class="muted">China-linked revenue, including new business from China</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>How it works in practice</h2>
+      <p class="muted">Set to my targets and goals. Change them to test other scenarios. Each deal is counted once.</p>
+      <div class="calc">
+        <div class="box">
+          <div class="inputs">
+            <div class="field"><label for="base">Monthly base (S$)</label><input id="base" type="number" step="100" value="18400"></div>
+            <div class="field"><label for="p1t">Pillar 1 target (S$)</label><input id="p1t" type="number" step="50000" value="4000000"></div>
+            <div class="field full"><label for="p1r">Pillar 1 revenue achieved (S$)</label><input id="p1r" type="number" step="50000" value="4500000"></div>
+            <div class="field"><label for="china">China-linked revenue, total (S$)</label><input id="china" type="number" step="50000" value="1000000"></div>
+            <div class="field"><label for="outbound">Of which new business from China (S$)</label><input id="outbound" type="number" step="50000" value="200000"></div>
+          </div>
+        </div>
+        <div class="box result">
+          <span class="eyebrow">Total yearly pay</span>
+          <div class="total" id="total">—</div>
+          <div class="stack" aria-hidden="true"><i class="base" id="barBase"></i><i class="var" id="barVar"></i></div>
+          <div class="legend"><span style="--c:var(--accent)">Base</span><span style="--c:var(--flag)">Commission</span></div>
+          <div class="lines">
+            <div><span>Base (12 months)</span><span class="num" id="lBase"></span></div>
+            <div><span>Pillar 1 · 10% above target</span><span class="num" id="lP1"></span></div>
+            <div><span>Other China-linked: 2% below target, 4% at or above</span><span class="num" id="lChina"></span></div>
+            <div><span>New business from China at 9%</span><span class="num" id="lOut"></span></div>
+            <div><span><b>Revenue brought in</b></span><span class="num" id="lRev"></span></div>
+            <div><span><b>Pay as a share of that revenue</b></span><span class="num" id="lRatio"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="box">
+      <h3>Also proposed</h3>
+      <ul>
+        <li>Proposed start date in December 2026</li>
+        <li>Scope and target reviews in June 2027 and December 2027</li>
+        <li>To discuss: possible travel and accommodation support for China weeks</li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+<script>
+(function(){
+  const tabs=[...document.querySelectorAll('.tab')];
+  function show(id){
+    tabs.forEach(t=>{const on=t.getAttribute('aria-controls')===id;t.setAttribute('aria-selected',on);document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});
+    try{history.replaceState(null,'','#'+id)}catch(e){}
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>show(t.getAttribute('aria-controls'))));
+  if(location.hash==='#comp')show('comp');
+
+  const $=id=>document.getElementById(id);
+  const v=id=>Math.max(0,parseFloat($(id).value)||0);
+  const fmt=n=>'S$'+Math.round(n).toLocaleString('en-SG');
+  function calc(){
+    const base=v('base')*12, t=v('p1t'), r=v('p1r'), china=v('china'), out=v('outbound');
+    const p1=Math.max(0,r-t)*0.10;
+    const nb=Math.min(out,china); const cc=(china-nb)*(china>=1e6?0.04:0.02);
+    const oc=nb*0.09;
+    const variable=p1+cc+oc, total=base+variable, rev=r+china;
+    $('total').textContent=fmt(total);
+    $('lBase').textContent=fmt(base); $('lP1').textContent=fmt(p1);
+    $('lChina').textContent=fmt(cc); $('lOut').textContent=fmt(oc);
+    $('lRev').textContent=fmt(rev);
+    $('lRatio').textContent= rev ? (total/rev*100).toFixed(1)+'%' : '—';
+    const vs = total ? variable/total*100 : 0;
+    $('barBase').style.width=(100-vs)+'%'; $('barVar').style.width=vs+'%';
+  }
+  document.querySelectorAll('.inputs input').forEach(el=>el.addEventListener('input',calc));
+  calc();
+})();
+</script>
