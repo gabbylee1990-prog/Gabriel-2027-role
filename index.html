@@ -284,8 +284,8 @@ td.r,th.r{text-align:right}
           <p>The role moves from Head of Customer Success to leading private-sector revenue, with responsibilities in China on top.</p>
         </div>
         <div class="box">
-          <span class="k">EMBA completed</span>
-          <p>I have completed my EMBA upskilling with a strong GPA of 3.8/4, including exchanges across Spain (ESADE), Italy (Bocconi), the US (Cornell Tech) and China (Shanghai Jiao Tong). I also successfully executed a consulting project worth SGD1.14m on AI and microdrama with Viu, a listed Hong Kong streaming company.</p>
+          <span class="k">Executive MBA (EMBA)</span>
+          <p>I have completed my EMBA upskilling with a strong GPA of 3.8/4, including exchanges across Spain (ESADE), Italy (Bocconi), the US (Cornell Tech) and China (Shanghai Jiao Tong). In addition, I successfully executed a consulting project worth SGD1.14m on AI and microdrama with Viu, a listed Hong Kong streaming company.</p>
         </div>
         <div class="box">
           <span class="k">Two roles in one</span>
@@ -370,7 +370,7 @@ td.r,th.r{text-align:right}
   function show(id,top){
     tabs.forEach(t=>{const on=t.getAttribute('aria-controls')===id;t.setAttribute('aria-selected',on);document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});
     try{history.replaceState(null,'','#'+id.replace('panel-',''))}catch(e){}
-    if(top){const pn=document.getElementById(id);const y=pn.getBoundingClientRect().top+window.scrollY-nav.offsetHeight-8;if(window.scrollY>y)window.scrollTo(0,Math.max(0,y));}
+    if(top){const pn=document.getElementById(id);const y=pn.getBoundingClientRect().top+window.scrollY-nav.offsetHeight-8;window.scrollTo({top:Math.max(0,y),behavior:'smooth'});}
   }
   tabs.forEach(t=>t.addEventListener('click',()=>show(t.getAttribute('aria-controls'),true)));
   window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(h==='comp'||h==='scope'){show('panel-'+h);window.scrollTo(0,0);}});
